@@ -107,22 +107,26 @@ def test_run_is_deterministic_no_churn():
     assert h1 == h2                      # identical bytes -> no commit churn
 
 
-def test_inject_chart_only_for_chart_hosts():
-    base = ('<item><title>Econ data</title>'
+def test_inject_chart_by_description_and_strip_thumbnail():
+    af._hires = lambda u: u   # no network in tests
+    base = ('<item><title>Econ</title>'
             '<link>https://www.axios.com/2026/07/01/econ</link>'
             '<content:encoded><![CDATA[<p>body</p>]]></content:encoded>'
-            '<dc:creator>X</dc:creator>'
             '<media:content medium="image" type="image/jpeg" url="URL" width="600">'
-            '<media:description>Chart</media:description></media:content>'
-            '<guid>https://www.axios.com/2026/07/01/econ</guid></item>')
-    chart = base.replace("URL", "https://datawrapper.dwcdn.net/a9c9g/fallback.png")
+            '<media:description>DESC</media:description></media:content>'
+            '<media:thumbnail height="128" url="https://images.axios.com/t.jpg" width="128"/>'
+            '<guid>g</guid></item>')
+    # Axios-hosted CHART, detected via 'Chart:' in the media:description -> injected
+    chart = base.replace("URL", "https://images.axios.com/chart.png").replace("DESC", "Data: X; Chart: Y/Axios")
     out = af.inject_chart(chart)
-    assert '<img src="https://datawrapper.dwcdn.net/a9c9g/fallback.png"' in out
+    assert '<img src="https://images.axios.com/chart.png"' in out
     assert out.count("<content:encoded>") == 1
-    assert af.inject_chart(out) == out                    # idempotent (no double-inject)
-
-    photo = base.replace("URL", "https://images.axios.com/x.jpg")
-    assert af.inject_chart(photo) == photo                # normal hero photo NOT injected
+    assert af.inject_chart(out) == out                    # idempotent
+    # a normal photo -> NOT injected (avoid duplicating the hero)
+    photo = base.replace("URL", "https://images.axios.com/p.jpg").replace("DESC", "Photo: Getty Images")
+    assert af.inject_chart(photo) == photo
+    # trailing thumbnail stripped
+    assert "media:thumbnail" not in af.strip_thumbnail(chart)
 
 
 if __name__ == "__main__":

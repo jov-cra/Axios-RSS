@@ -154,23 +154,62 @@ def _forced(text: str, terms: list[str]) -> bool:
 
 
 CHART_HOSTS = ("datawrapper", "dwcdn", "flourish", "infogram")
+MEDIA_CONTENT_RE = re.compile(r"<media:content\b([^>]*)>(.*?)</media:content>", re.DOTALL)
+THUMB_RE = re.compile(r"<media:thumbnail\b[^>]*>", re.DOTALL)
+
+
+def _media_content(block: str) -> tuple[str, str]:
+    """Return (url, inner-description) of the item's first <media:content>."""
+    m = MEDIA_CONTENT_RE.search(block)
+    if not m:
+        return "", ""
+    u = re.search(r'url="([^"]+)"', m.group(1))
+    return (u.group(1) if u else ""), m.group(2)
+
+
+def _is_chart(url: str, desc: str) -> bool:
+    """Axios credits charts as 'Data: … ; Chart: …' / 'Map: …' but photos as
+    'Photo: …' — so the media:description tells charts from photos reliably."""
+    d = desc.lower()
+    if any(k in d for k in ("chart", "data:", "map:", "table:", "graphic")):
+        return True
+    return any(h in url for h in CHART_HOSTS)
+
+
+def _hires(url: str) -> str:
+    """Datawrapper's fallback.png is low-res (pixelates when scaled up); full.png
+    is crisp. Upgrade if it actually exists (fail-safe to the original)."""
+    if "dwcdn.net" in url and url.endswith("/fallback.png"):
+        cand = url[: -len("fallback.png")] + "full.png"
+        try:
+            if requests.head(cand, timeout=10, allow_redirects=True).status_code == 200:
+                return cand
+        except Exception:
+            pass
+    return url
 
 
 def inject_chart(block: str) -> str:
-    """Axios puts charts in <media:content> as a static PNG (Datawrapper etc.),
-    NOT inline in the body — so readers that ignore <media:content> (e.g. Tapestry)
-    don't show them. If the item's media image is a chart and isn't already inline,
-    prepend it as an <img> to content:encoded. Only chart hosts, so normal hero
-    photos aren't duplicated. Idempotent."""
-    m = re.search(r'<media:content\b[^>]*\burl="([^"]+)"', block)
-    if not m or not any(h in m.group(1) for h in CHART_HOSTS):
+    """Charts live in <media:content> (a static PNG), not inline in the body, so
+    readers that ignore <media:content> (e.g. Tapestry) don't show them. If the
+    item's media is a chart, prepend a crisp <img> to content:encoded. Photos are
+    left alone (not duplicated). Idempotent."""
+    url, desc = _media_content(block)
+    if not url or not _is_chart(url, desc):
         return block
-    url = m.group(1)
     ce = re.search(r"<content:encoded><!\[CDATA\[(.*?)\]\]></content:encoded>", block, re.DOTALL)
     if not ce or url in ce.group(1):
         return block
-    new_ce = f'<content:encoded><![CDATA[<p><img src="{url}" alt="Chart"/></p>{ce.group(1)}]]></content:encoded>'
+    img = _hires(url)
+    if img in ce.group(1):
+        return block
+    new_ce = f'<content:encoded><![CDATA[<p><img src="{img}" alt="Chart"/></p>{ce.group(1)}]]></content:encoded>'
     return block[:ce.start()] + new_ce + block[ce.end():]
+
+
+def strip_thumbnail(block: str) -> str:
+    """Drop the tiny <media:thumbnail> some readers show as a small trailing image."""
+    return THUMB_RE.sub("", block)
 
 
 # --------------------------------------------------------------------------- #
@@ -264,7 +303,9 @@ def run(args) -> int:
         if is_pol:
             dropped += 1
             continue
-        kept.append(inject_chart(block) if args.inject_charts else block)
+        if args.inject_charts:
+            block = strip_thumbnail(inject_chart(block))
+        kept.append(block)
 
     # FAIL-CLOSED: if every classification attempt failed, don't overwrite the feed.
     if attempted > 0 and failed == attempted:
