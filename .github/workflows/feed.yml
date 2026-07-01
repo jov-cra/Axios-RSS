@@ -1,0 +1,40 @@
+name: Build filtered Axios feed
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 min; adjust to taste
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: axios-feed
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Build filtered feed
+        env:
+          AX_DROP: "politics"     # comma-separated section substrings to remove
+          AX_TITLE: "Axios (no Politics)"
+          AX_FEED_SELF: "https://jov-cra.github.io/axios-filtered/feed.xml"
+        run: python axios_filter.py --report
+      - name: Commit feed + state
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add feed.xml state.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update filtered Axios feed [skip ci]"
+            git push
+          fi
