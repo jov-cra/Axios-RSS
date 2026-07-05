@@ -605,8 +605,18 @@
       "seen": "2026-07-05",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/05/obama-democrats-2028-president": {
+      "pol": true,
+      "seen": "2026-07-05",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/05/trump-fourth-of-july-speech-delayed": {
       "pol": true,
+      "seen": "2026-07-05",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/05/trump-official-balogun-red-card-fifa-world-cup": {
+      "pol": false,
       "seen": "2026-07-05",
       "v": "v2"
     },
