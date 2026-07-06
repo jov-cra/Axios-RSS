@@ -625,8 +625,23 @@
       "seen": "2026-07-06",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/06/inflation-fed-pce": {
+      "pol": false,
+      "seen": "2026-07-06",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/06/ornn-gpu-compute-commodity": {
       "pol": false,
+      "seen": "2026-07-06",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/06/trump-fifa-red-card-balogun-usa-belgium-europe": {
+      "pol": true,
+      "seen": "2026-07-06",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/06/trump-nato-netanyahu-erdogan-israel": {
+      "pol": true,
       "seen": "2026-07-06",
       "v": "v2"
     },
