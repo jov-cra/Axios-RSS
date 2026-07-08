@@ -675,6 +675,11 @@
       "seen": "2026-07-08",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/07/ai-hacking-benchmarking-tests": {
+      "pol": false,
+      "seen": "2026-07-08",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/07/gen-x-population-shrinking-taxes-economy": {
       "pol": false,
       "seen": "2026-07-08",
@@ -685,7 +690,17 @@
       "seen": "2026-07-08",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/07/microsofts-gaming-xbox-deals": {
+      "pol": false,
+      "seen": "2026-07-08",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/07/mitch-mcconnell-health-senate-gop-leaders": {
+      "pol": true,
+      "seen": "2026-07-08",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/07/republicans-8-million-ad-campaign-platner-replacement": {
       "pol": true,
       "seen": "2026-07-08",
       "v": "v2"
@@ -712,6 +727,11 @@
     },
     "https://www.axios.com/2026/07/07/where-obamacare-enrollment-is-plummeting": {
       "pol": true,
+      "seen": "2026-07-08",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/08/openai-gpt-trump-ban-lifted": {
+      "pol": false,
       "seen": "2026-07-08",
       "v": "v2"
     },
