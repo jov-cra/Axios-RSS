@@ -890,8 +890,23 @@
       "seen": "2026-07-10",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/10/apple-sues-openai-trade-secret-theft": {
+      "pol": false,
+      "seen": "2026-07-10",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/10/fed-task-forces-fomc": {
       "pol": false,
+      "seen": "2026-07-10",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/10/government-shutdown-congress-republicans-midterm-elections": {
+      "pol": true,
+      "seen": "2026-07-10",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/10/graham-platner-maine-senate-democrats": {
+      "pol": true,
       "seen": "2026-07-10",
       "v": "v2"
     },
