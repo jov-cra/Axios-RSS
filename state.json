@@ -1560,7 +1560,22 @@
       "seen": "2026-07-22",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/22/nvidia-jensen-huang-china-open-source-ai": {
+      "pol": false,
+      "seen": "2026-07-22",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/22/scoop-regime-change-sells-500000-on-track-for-nonfiction-bestseller-of-26": {
+      "pol": false,
+      "seen": "2026-07-22",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/22/senate-lindsey-graham-committtee-assignments": {
+      "pol": true,
+      "seen": "2026-07-22",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/22/trump-rubio-tate-brothers-extradition": {
       "pol": true,
       "seen": "2026-07-22",
       "v": "v2"
