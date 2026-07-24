@@ -1635,6 +1635,11 @@
       "seen": "2026-07-24",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/23/cyclosporiasis-cases-rates-rise-outbreak-states": {
+      "pol": false,
+      "seen": "2026-07-24",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/23/democrat-senate-super-pac-tv-ads": {
       "pol": true,
       "seen": "2026-07-24",
@@ -1715,7 +1720,17 @@
       "seen": "2026-07-24",
       "v": "v2"
     },
+    "https://www.axios.com/2026/07/23/senate-russia-sanctions-iran-vote": {
+      "pol": true,
+      "seen": "2026-07-24",
+      "v": "v2"
+    },
     "https://www.axios.com/2026/07/23/trump-axios-iran-interview": {
+      "pol": true,
+      "seen": "2026-07-24",
+      "v": "v2"
+    },
+    "https://www.axios.com/2026/07/23/trump-doj-withdraws-new-york-times-subpoenas": {
       "pol": true,
       "seen": "2026-07-24",
       "v": "v2"
@@ -1748,6 +1763,11 @@
     "https://www.axios.com/local/salt-lake-city/2026/07/13/trump-cuts-grand-staircase-escalante-bears-ears-national-monuments-utah": {
       "pol": true,
       "seen": "2026-07-21",
+      "v": "v2"
+    },
+    "https://www.axios.com/local/twin-cities/2026/07/23/vance-boelter-sentenced-life-hortman-assasinations": {
+      "pol": false,
+      "seen": "2026-07-24",
       "v": "v2"
     },
     "https://www.axios.com/local/washington-dc/2026/06/30/trump-july-4-speech-fireworks-show-dc-world-record": {
